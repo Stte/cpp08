@@ -6,7 +6,7 @@
 /*   By: tspoof <tspoof@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 20:12:43 by tspoof            #+#    #+#             */
-/*   Updated: 2024/02/07 16:19:05 by tspoof           ###   ########.fr       */
+/*   Updated: 2024/02/08 16:15:40 by tspoof           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,26 @@ class Span
 {
 public:
 	Span(unsigned int n);
-	// span(iterator begin, iterator end)
 	Span(Span const &other);
-	~Span(void);
+	~Span();
 	Span &operator=(Span const &other);
 
 	void addNumber(int number);
-	int shortestSpan(void);
-	int longestSpan(void);
+	template <typename Iterator>
+	void addNumbers(Iterator begin, Iterator end)
+	{
+		if (std::distance(begin, end) > size)
+			throw std::runtime_error("Span is too small!");
+		numbers.insert(numbers.begin(), begin, end);
+	}
 
-	int getSize(void) const;
+	unsigned int shortestSpan() const;
+	unsigned int longestSpan() const;
+
+	unsigned int getSize() const;
 
 private:
-	Span(void);
+	Span();
 	unsigned int size;
 	std::vector<int> numbers;
 };
